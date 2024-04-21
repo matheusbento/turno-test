@@ -12,6 +12,7 @@ return new class () extends Migration {
     {
         Schema::table('users', function (Blueprint $table) {
             $table->double('balance')->default(0.00)->after('password');
+            $table->string('type')->default('customer');
         });
     }
 
@@ -22,6 +23,7 @@ return new class () extends Migration {
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('balance');
+            $table->dropColumn('type');
         });
     }
 };
