@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Enums\UserType;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,25 +21,29 @@ class UserAuthController extends Controller
             'name' => $registerUserData['name'],
             'email' => $registerUserData['email'],
             'password' => Hash::make($registerUserData['password']),
+            'type' => UserType::CUSTOMER,
         ]);
         return response()->json([
-            'message' => 'User Created ',
-        ]);
+            'message' => 'User Created Successfully',
+        ], 201);
     }
 
     public function login(Request $request)
     {
         $loginUserData = $request->validate([
             'email' => 'required|string|email',
-            'password' => 'required|min:8',
+            'password' => 'required',
         ]);
+
         $user = User::where('email', $loginUserData['email'])->first();
         if(!$user || !Hash::check($loginUserData['password'], $user->password)) {
             return response()->json([
                 'message' => 'Invalid Credentials',
             ], 401);
         }
+
         $token = $user->createToken($user->name . '-AuthToken')->plainTextToken;
+
         return response()->json([
             'access_token' => $token,
         ]);
@@ -51,6 +56,13 @@ class UserAuthController extends Controller
 
         return response()->json([
             'message' => 'logged out',
+        ]);
+    }
+
+    public function me()
+    {
+        return response()->json([
+            'user' => Auth::user(),
         ]);
     }
 

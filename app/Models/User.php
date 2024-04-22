@@ -11,6 +11,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * User
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property UserType $type
+ *
+ * @property-read UserDeposit[] $deposits
+ *
+ */
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -77,5 +89,10 @@ class User extends Authenticatable
     public function deposits(): HasMany
     {
         return $this->hasMany(UserDeposit::class);
+    }
+
+    public function purchases(): HasMany
+    {
+        return $this->hasMany(UserPurchase::class);
     }
 }

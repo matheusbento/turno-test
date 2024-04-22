@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Enums\UserType;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,11 +14,35 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        User::where('email', 'admin@example.com')->update([
+            'email' => fake()->unique()->safeEmail(),
+        ]);
+        User::where('email', 'customer@example.com')->update([
+            'email' => fake()->unique()->safeEmail(),
+        ]);
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $customer = User::factory()->create([
+            'name' => 'customer',
+            'email' => 'customer@example.com',
+        ]);
+
+        echo '> Seeding new Customer: ' . $customer->email . "\n";
+
+        $admin = User::factory()->create([
+            'name' => 'admin',
+            'email' => 'admin@example.com',
+            'type' => UserType::ADMIN,
+        ]);
+
+        echo '> Seeding new Admin: ' . $admin->email . "\n";
+
+        $this->call(UserDepositSeeder::class, false, [
+            'user' => $customer,
+        ]);
+
+        $this->call(UserPurchaseSeeder::class, false, [
+            'user' => $customer,
         ]);
     }
 }
