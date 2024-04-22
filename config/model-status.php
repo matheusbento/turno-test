@@ -1,8 +1,8 @@
 <?php
 
-use App\Models\Enums\UserDepositStatus;
-use App\Models\UserDeposit;
+use App\Models\Enums\UserTransactionStatus;
+use App\Models\UserTransaction;
 
 return [
-    UserDeposit::class => UserDepositStatus::class,
+    UserTransaction::class => UserTransactionStatus::class,
 ];

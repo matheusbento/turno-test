@@ -2,12 +2,14 @@
 
 namespace Database\Factories;
 
+use App\Models\Enums\UserTransactionStatus;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserPurchase>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserTransaction>
  */
-class UserPurchaseFactory extends Factory
+class UserTransactionFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,11 +19,10 @@ class UserPurchaseFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => 1,
+            'user_id' => User::factory(),
             'amount' => $this->faker->randomFloat(2, 1, 1000),
             'description' => $this->faker->sentence,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'current_status' => UserTransactionStatus::PENDING,
         ];
     }
 }

@@ -3,9 +3,9 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\UserDeposit;
+use App\Models\UserTransaction;
 
-class UserDepositPolicy
+class UserTransactionPolicy
 {
     /**
       * Determine whether the user can view any models.
@@ -15,7 +15,7 @@ class UserDepositPolicy
       */
     public function viewAny(User $user)
     {
-        return $user->isCustomer();
+        return $user->isCustomer() || $user->isAdmin();
     }
 
     /**
@@ -25,7 +25,7 @@ class UserDepositPolicy
      * @param  Usage  $usage
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, UserDeposit $userDeposit)
+    public function view(User $user, UserTransaction $userDeposit)
     {
         return $user->isCustomer() && ($user->id === $userDeposit->user_id);
     }
@@ -48,7 +48,7 @@ class UserDepositPolicy
      * @param  Usage  $usage
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, UserDeposit $userDeposit)
+    public function update(User $user, UserTransaction $userDeposit)
     {
         return false;
     }
@@ -60,7 +60,7 @@ class UserDepositPolicy
      * @param  Usage  $usage
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, UserDeposit $userDeposit)
+    public function delete(User $user, UserTransaction $userDeposit)
     {
         return false;
     }
@@ -72,7 +72,7 @@ class UserDepositPolicy
      * @param  Usage  $usage
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, UserDeposit $userDeposit)
+    public function restore(User $user, UserTransaction $userDeposit)
     {
         return $this->update($user, $userDeposit);
     }
@@ -84,7 +84,7 @@ class UserDepositPolicy
      * @param  Usage  $usage
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, UserDeposit $userDeposit)
+    public function forceDelete(User $user, UserTransaction $userDeposit)
     {
         return false;
     }
@@ -96,7 +96,7 @@ class UserDepositPolicy
      * @param  Usage  $usage
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function approve(User $user, UserDeposit $userDeposit)
+    public function approve(User $user, UserTransaction $userDeposit)
     {
         return $user->isAdmin() && $userDeposit->isPending();
     }
@@ -108,7 +108,7 @@ class UserDepositPolicy
      * @param  Usage  $usage
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function reject(User $user, UserDeposit $userDeposit)
+    public function reject(User $user, UserTransaction $userDeposit)
     {
         return $user->isAdmin() && $userDeposit->isPending();
     }

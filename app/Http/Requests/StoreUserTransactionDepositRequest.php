@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Models\UserDepositCheck;
+use App\Models\UserTransactionCheck;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUserDepositRequest extends FormRequest
+class StoreUserTransactionDepositRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -23,7 +23,7 @@ class StoreUserDepositRequest extends FormRequest
             'file' => [
                 'required',
                 'file',
-                'mimetypes:' . implode(',', UserDepositCheck::ACCEPTABLE_FILE_TYPES),
+                'mimetypes:' . implode(',', UserTransactionCheck::ACCEPTABLE_FILE_TYPES),
             ],
         ];
     }

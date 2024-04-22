@@ -37,11 +37,11 @@ class DatabaseSeeder extends Seeder
 
         echo '> Seeding new Admin: ' . $admin->email . "\n";
 
-        $this->call(UserDepositSeeder::class, false, [
+        $this->call(UserTransactionDepositSeeder::class, false, [
             'user' => $customer,
         ]);
 
-        $this->call(UserPurchaseSeeder::class, false, [
+        $this->call(UserTransactionPurchaseSeeder::class, false, [
             'user' => $customer,
         ]);
     }

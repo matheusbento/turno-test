@@ -2,14 +2,14 @@
 
 namespace App\Providers;
 
-use App\Models\UserDeposit;
-use App\Policies\UserDepositPolicy;
+use App\Models\UserTransaction;
+use App\Policies\UserTransactionPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
     protected $policies = [
-        UserDeposit::class => UserDepositPolicy::class,
+        UserTransaction::class => UserTransactionPolicy::class,
     ];
 
     public function boot(): void

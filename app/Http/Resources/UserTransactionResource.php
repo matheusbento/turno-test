@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserDepositResource extends JsonResource
+class UserTransactionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,8 +17,9 @@ class UserDepositResource extends JsonResource
         return [
             'id' => $this->id,
             'amount' => $this->amount,
-            'current_status' => $this->current_status,
-            'entered_at' => $this->entered_at,
+            'type' => $this->type,
+            'operation' => $this->operation,
+            'description' => $this->description,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

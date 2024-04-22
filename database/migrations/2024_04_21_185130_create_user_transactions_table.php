@@ -10,11 +10,15 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('user_purchases', function (Blueprint $table) {
+        Schema::create('user_transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
+            $table->foreignId('file_id')->nullable()->constrained();
             $table->decimal('amount', 10, 2);
-            $table->string('description');
+            $table->string('operation');
+            $table->string('type');
+            $table->string('description')->nullable();
+            $table->string('current_status')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +28,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_purchases');
+        Schema::dropIfExists('user_transactions');
     }
 };

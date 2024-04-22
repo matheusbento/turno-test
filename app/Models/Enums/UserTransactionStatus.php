@@ -2,7 +2,7 @@
 
 namespace App\Models\Enums;
 
-enum UserDepositStatus: string implements ModelStatusInterface
+enum UserTransactionStatus: string implements ModelStatusInterface
 {
     case PENDING = 'pending';
     case APPROVED = 'approved';

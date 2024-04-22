@@ -20,7 +20,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $password
  * @property UserType $type
  *
- * @property-read UserDeposit[] $deposits
+ * @property-read UserTransaction[] $transactions
  *
  */
 class User extends Authenticatable
@@ -86,13 +86,8 @@ class User extends Authenticatable
     }
 
 
-    public function deposits(): HasMany
+    public function transactions(): HasMany
     {
-        return $this->hasMany(UserDeposit::class);
-    }
-
-    public function purchases(): HasMany
-    {
-        return $this->hasMany(UserPurchase::class);
+        return $this->hasMany(UserTransaction::class);
     }
 }
