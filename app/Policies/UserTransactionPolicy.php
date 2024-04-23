@@ -25,9 +25,14 @@ class UserTransactionPolicy
      * @param  Usage  $usage
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, UserTransaction $userDeposit)
+    public function view(User $user, UserTransaction $userTransaction)
     {
-        return $user->isCustomer() && ($user->id === $userDeposit->user_id);
+        return $user->isCustomer() && ($user->id === $userTransaction->user_id);
+    }
+
+    public function viewCheck(User $user, UserTransaction $userTransaction)
+    {
+        return $user->isCustomer() && ($user->id === $userTransaction->user_id) || $user->isAdmin();
     }
 
     /**
@@ -48,7 +53,7 @@ class UserTransactionPolicy
      * @param  Usage  $usage
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, UserTransaction $userDeposit)
+    public function update(User $user, UserTransaction $userTransaction)
     {
         return false;
     }
@@ -60,7 +65,7 @@ class UserTransactionPolicy
      * @param  Usage  $usage
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, UserTransaction $userDeposit)
+    public function delete(User $user, UserTransaction $userTransaction)
     {
         return false;
     }
@@ -72,9 +77,9 @@ class UserTransactionPolicy
      * @param  Usage  $usage
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, UserTransaction $userDeposit)
+    public function restore(User $user, UserTransaction $userTransaction)
     {
-        return $this->update($user, $userDeposit);
+        return $this->update($user, $userTransaction);
     }
 
     /**
@@ -84,7 +89,7 @@ class UserTransactionPolicy
      * @param  Usage  $usage
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, UserTransaction $userDeposit)
+    public function forceDelete(User $user, UserTransaction $userTransaction)
     {
         return false;
     }
@@ -96,9 +101,9 @@ class UserTransactionPolicy
      * @param  Usage  $usage
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function approve(User $user, UserTransaction $userDeposit)
+    public function approve(User $user, UserTransaction $userTransaction)
     {
-        return $user->isAdmin() && $userDeposit->isPending();
+        return $user->isAdmin() && $userTransaction->isPending();
     }
 
     /**
@@ -108,8 +113,8 @@ class UserTransactionPolicy
      * @param  Usage  $usage
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function reject(User $user, UserTransaction $userDeposit)
+    public function reject(User $user, UserTransaction $userTransaction)
     {
-        return $user->isAdmin() && $userDeposit->isPending();
+        return $user->isAdmin() && $userTransaction->isPending();
     }
 }

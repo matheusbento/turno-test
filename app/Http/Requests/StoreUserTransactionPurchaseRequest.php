@@ -18,6 +18,11 @@ class StoreUserTransactionPurchaseRequest extends FormRequest
                 'required',
                 'numeric',
                 'gt:0',
+                function ($attribute, $value, $fail) {
+                    if ($value > $this->user()->balance) {
+                        $fail('Insufficient balance');
+                    }
+                },
             ],
             'description' => [
                 'required',

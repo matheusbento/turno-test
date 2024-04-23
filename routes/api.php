@@ -22,7 +22,7 @@ Route::prefix('v1')->group(function () {
         Route::prefix('deposits')->group(function () {
             Route::post('/', [UserTransactionDepositController::class, 'store'])->middleware('can:create,App\Models\UserTransaction');
             Route::get('/{userTransaction}', [UserTransactionDepositController::class, 'show'])->middleware('can:view,userTransaction');
-            Route::get('/{userTransaction}/check', [UserTransactionDepositController::class, 'check'])->middleware('can:view,userTransaction');
+            Route::get('/{userTransaction}/check', [UserTransactionDepositController::class, 'check'])->middleware('can:viewCheck,userTransaction');
             Route::post('/{userTransaction}/approve', [UserTransactionDepositController::class, 'approve'])->middleware('can:approve,userTransaction');
             Route::post('/{userTransaction}/reject', [UserTransactionDepositController::class, 'reject'])->middleware('can:reject,userTransaction');
         });

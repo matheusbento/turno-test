@@ -80,7 +80,10 @@ class UserTransactionDepositController extends Controller
     */
     public function check(Request $request, UserTransaction $userTransaction)
     {
-        return $userTransaction->file->download($userTransaction->file->path);
+        $file = $userTransaction->file->read($userTransaction->file->path);
+        return [
+            'data' => base64_encode($file),
+        ];
     }
 
     public function approve(UserTransaction $userTransaction)

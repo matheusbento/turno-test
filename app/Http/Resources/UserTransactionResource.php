@@ -19,6 +19,7 @@ class UserTransactionResource extends JsonResource
             'amount' => $this->amount,
             'type' => $this->type,
             'operation' => $this->operation,
+            'current_status' => $this->current_status,
             'description' => $this->description,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

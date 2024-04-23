@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserTransactionResource;
+use App\Models\Enums\UserTransactionStatus;
+use App\Models\Enums\UserTransactionType;
+use App\Models\Enums\UserType;
+use App\Models\UserTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -32,8 +36,14 @@ class UserTransactionController extends Controller
         ]);
 
         $user = Auth::user();
-        $builder = $user->transactions()->with($this->getRelationshipsToLoad())
-            ->orderBy($request->input('order_by', 'created_at'), $request->input('direction', 'desc'));
+
+        if($user->type === UserType::ADMIN) {
+            $builder = UserTransaction::where('type', UserTransactionType::DEPOSIT)->whereCurrentStatus(UserTransactionStatus::PENDING)->with($this->getRelationshipsToLoad());
+        } else {
+            $builder = $user->transactions()->with($this->getRelationshipsToLoad());
+        }
+
+        $builder->orderBy($request->input('order_by', 'created_at'), $request->input('direction', 'desc'));
 
         if ($search = $request->input('q')) {
             $builder->where('name', 'LIKE', "%{$search}%");
