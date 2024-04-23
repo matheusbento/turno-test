@@ -80,7 +80,11 @@ class UserTransactionDepositController extends Controller
     */
     public function check(Request $request, UserTransaction $userTransaction)
     {
+        if(!$userTransaction->file) {
+            return response()->json(['error' => 'No file uploaded'], 404);
+        }
         $file = $userTransaction->file->read($userTransaction->file->path);
+
         return [
             'data' => base64_encode($file),
         ];

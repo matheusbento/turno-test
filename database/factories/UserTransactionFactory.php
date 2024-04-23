@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Enums\UserTransactionOperationType;
 use App\Models\Enums\UserTransactionStatus;
+use App\Models\Enums\UserTransactionType;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,6 +25,8 @@ class UserTransactionFactory extends Factory
             'amount' => $this->faker->randomFloat(2, 1, 1000),
             'description' => $this->faker->sentence,
             'current_status' => UserTransactionStatus::PENDING,
+            'operation' => $this->faker->randomElement([UserTransactionOperationType::CREDIT, UserTransactionOperationType::DEBIT]),
+            'type' => UserTransactionType::DEPOSIT,
         ];
     }
 }
