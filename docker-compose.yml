@@ -1,13 +1,14 @@
-version: '3.9'
+version: "3.4"
 
 services:
-  postgres:
-    image: postgres:14-alpine
+  mariadb:
+    image: mariadb:10.7
     ports:
-      - 5432:5432
+      - 3306:3306
     volumes:
-      - ~/apps/postgres:/var/lib/postgresql/data
+      - ~/apps/mariadb/turno:/var/lib/mysql
     environment:
-      - POSTGRES_PASSWORD=user1232
-      - POSTGRES_USER=user
-      - POSTGRES_DB=turno
+      MYSQL_ROOT_PASSWORD: QMWOD12o3m1md1
+      MYSQL_DATABASE: turno
+      MYSQL_USER: turno
+      MYSQL_PASSWORD: QMWOD12o3m1md1
