@@ -14,7 +14,7 @@ return new class () extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('file_id')->nullable()->constrained();
-            $table->decimal('amount', 10, 2);
+            $table->double('amount');
             $table->string('operation');
             $table->string('type');
             $table->string('description')->nullable();

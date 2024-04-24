@@ -19,6 +19,7 @@ class StoreUserTransactionDepositRequest extends FormRequest
                 'required',
                 'numeric',
                 'gt:0',
+                'lte:9999999999.99',
             ],
             'file' => [
                 'required',
